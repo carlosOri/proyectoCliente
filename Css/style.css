@@ -1,0 +1,159 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 62.5%;
+}
+
+/*Variables*/
+:root {
+  /*Gama de colores*/
+  --color_primario: #6307da;
+  --color_primario_ligth: #af7af4;
+  --color_secundario: #f94343;
+  --color_secundario_ligth: #f57575;
+  --color_blanco: #ffffff;
+  --color_negro: #000000;
+  --color_verde: #06fa7c;
+}
+
+/*Estilos principales*/
+.original {
+  background-image: linear-gradient(
+    to left,
+    var(--color_negro),
+    var(--color_primario)
+  );
+}
+.green {
+  background-image: linear-gradient(
+    to left,
+    var(--color_negro),
+    var(--color_verde)
+  );
+  & h1 {
+    font-size: 6rem;
+    color: var(--color_blanco);
+    text-align: center;
+    padding: 4rem 0;
+  }
+  a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: var(--color_blanco);
+    padding: 1rem;
+  }
+  .tema button {
+    width: 8rem;
+    height: 2.6rem;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    background-color: var(--color_blanco);
+    opacity: 0.6;
+    border: none;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+}
+
+.red {
+  background-image: linear-gradient(
+    to left,
+    var(--color_negro),
+    var(--color_secundario)
+  );
+  & h1 {
+    font-size: 6rem;
+    color: var(--color_secundario_ligth);
+    text-align: center;
+    padding: 4rem 0;
+  }
+  a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: var(--color_secundario_ligth);
+    padding: 1rem;
+  }
+  .tema button {
+    width: 8rem;
+    height: 2.6rem;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    background-color: var(--color_secundario_ligth);
+    opacity: 0.6;
+    border: none;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+}
+
+h1 {
+  font-size: 6rem;
+  color: var(--color_primario_ligth);
+  text-align: center;
+  padding: 4rem 0;
+}
+
+a {
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: var(--color_primario_ligth);
+  padding: 1rem;
+}
+
+/*Estilos*/
+.header {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  & h1 {
+    width: 100%;
+  }
+  .titulo {
+    display: grid;
+    grid-template-columns: 87% 12%;
+  }
+}
+.tema {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: start;
+  & button {
+    width: 8rem;
+    height: 2.6rem;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    background-color: var(--color_primario_ligth);
+    opacity: 0.6;
+    border: none;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+}
+
+.barra_navegacion {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}

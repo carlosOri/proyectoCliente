@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio formulario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <header class="encabezado-formulario">
+        <h1 class="titulo">Registro clientes</h1>
+    </header>
+    <!-- contenedor del formulario y registros -->
+    <main>
+        <section class="seccion-formulario">
+            <div class="formulario">
+                <h2 class="titulo-secundario">Formulario:</h2>
+                <!-- formulario -->
+                <form action="" method="" class="containerformulario" autocomplete="off">
+                    <div class="container-input ">
+                        <label for="nombre">Nombre:</label>
+                        <input class="caja-input" type="text" name="nombre" id="nombre" value=""
+                            placeholder="Escribe tu nombre">
+                        <div class="in-nombre" style="height: 10px;"></div>
+
+                    </div>
+                    <div class="container-input ">
+                        <label for="apellido">Apellido:</label>
+                        <input class="caja-input" type="text" name="apellido" id="apellido" value=""
+                            placeholder="Primer apellido">
+                        <div class="in-apellido" style="height: 10px;"></div>
+                    </div>
+
+                    <div class="container-input ">
+                        <label for="subApellido">Segundo Apellido:</label>
+                        <input class="caja-input" type="text" name="subApellido" id="subApellido" value=""
+                            placeholder="Segundo apellido">
+                        <div class="in-subApellido" style="height: 10px;"></div>
+                    </div>
+
+                    <div id="mensage"></div>
+
+                    <div class="container-botones">
+                        <button class="boton-crear" type="submit">Enviar</button>
+                        <button type="reset" class="boton-reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <!-- seccion registros -->
+            <div class="container-registros">
+                <h2 class="titulo-secundario">Registros:</h2>
+                <p class="sub-titulo">Clientes:</p>
+                <div id="registros">
+                    <p id="no-registros">No hay registros ...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Creado para fines educativos</p>
+    </footer>
+
+    <script src="js/classApp.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/runApp.js"></script>
+</body>
+
+</html>
