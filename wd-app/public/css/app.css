@@ -230,21 +230,34 @@ label {
 }
 
 .p-registro {
-  width: 60%;
-  margin: 0px;
+  width: 97%;
+  margin-top: 0px;
+  margin-bottom: 30px;
   margin-left: 20px;
   padding: 5px;
-  border-bottom: 1px dashed var(--color_gris-oscuro);
+  line-height: 1.125;
 }
 
 .estilo-registro {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 100%;
+  align-items: end;
+  gap: 5px;
   width: 100%;
-  height: 35px;
-  margin-bottom: 5px;
+  border-bottom: 1px dashed var(--color_gris-oscuro);
+}
+
+.resaltado {
+  font-weight: bold;
+  color: var(--color_gris-oscuro);
+}
+
+.estilo-botones {
+ display: flex;
+ flex-direction: row;
+ gap: 10%;
+ flex-wrap: nowrap;
+ justify-content: center;
 }
 
 /* estilos para los input */
@@ -271,6 +284,12 @@ label {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+}
+
+.date {
+  font-family: "Quicksand", sans-serif;
+  color: var(--color_gris-oscuro);
+  font-weight: 550;
 }
 
 /* estilos botones */
@@ -334,8 +353,9 @@ label {
 }
 
 .boton-borrar {
-  width: fit-content;
+  width: 20%;
   height: 30px;
+  margin-bottom: 35px;
   background-color: var(--color_rojo);
   color: var(--color_blanco);
   padding: 0px 5px;
@@ -353,8 +373,9 @@ label {
 }
 
 .boton-editar {
-  width: fit-content;
+  width: 20%;
   height: 30px;
+  margin-bottom: 35px;
   background-color: var(--color_naranja);
   color: var(--color_blanco);
   padding: 0px 5px;
@@ -464,12 +485,12 @@ label {
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
     -o-transform: translateX(0);
-}
+  }
   20% {
     opacity: 0.3;
   }
 
-  50%{
+  50% {
     opacity: 0;
     visibility: hidden;
   }
@@ -486,18 +507,28 @@ label {
 }
 
 /* media querys */
-@media(max-width: 1120px) {
+@media (max-width: 1250px) {
   .seccion-formulario {
     display: grid;
     grid-template-columns: 100%;
     gap: 50px;
   }
+
+  .container-registros {
+    display: block;
+    padding-bottom: 40px;
+  }
+
+ .p-registro {
+  font-size: 1.5rem;
+ }
+
   .bg-estudio {
     height: 300px;
   }
 }
 
-@media(max-width: 800px) {
+@media (max-width: 800px) {
   .titulo {
     font-size: 4rem;
   }
@@ -520,5 +551,15 @@ label {
     width: 40%;
   }
 
-}
+  .p-registro {
+    font-size: 1.3rem;
+   }
 
+   .boton-editar {
+    font-size: 1.3rem;
+   }
+
+   .boton-borrar {
+    font-size: 1.3rem;
+   }
+}

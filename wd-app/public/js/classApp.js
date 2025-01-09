@@ -9,8 +9,23 @@ class Persona {
 }
 
 class Cliente extends Persona {
-  constructor(nombre, apellido, segundoApellido) {
+  constructor(nombre, apellido, segundoApellido, dni, nacimiento, mensaje) {
     super(nombre, apellido, segundoApellido);
+    const fecha = new Date();
+    
+    // Formatear la fecha
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Mes inicia en 0
+    const anio = fecha.getFullYear();
+
+    // Formatear la hora
+    const horas = String(fecha.getHours()).padStart(2, '0');
+    const minutos = String(fecha.getMinutes()).padStart(2, '0');
+    const segundos = String(fecha.getSeconds()).padStart(2, '0');
+    this.fechaCita = `${dia}-${mes}-${anio} ${horas}:${minutos}:${segundos}`;;
+    this.dni = dni;
+    this.nacimiento = nacimiento;
+    this.mensaje = mensaje;
   }
 
   setNombre(nuevoNombre) {
@@ -44,6 +59,27 @@ class Cliente extends Persona {
   getId() {
     return this.id;
   }
+
+  // Getter para el atributo edit
+  getEdit() {
+    return this._edit;
+  }
+
+  // Setter para el atributo edit
+  setEdit(value) {
+    if (typeof value !== "boolean") {
+      throw new Error("El valor de edit debe ser un booleano.");
+    }
+    this._edit = value;
+  }
+
+  setDni(dni) {
+    this.id = dni;
+  }
+
+  getDni() {
+    return this.dni;
+  }
 }
 
 class Iu {
@@ -56,11 +92,20 @@ class Iu {
     mensage.classList.add("visible");
     // contenedor registros
     let containerTexto = document.querySelector("#registros");
-    this.lista.forEach((e) => {
+    this.lista.forEach((element) => {
       // texto de los registros inicio localStorage
-      let texto = document.createElement("P");
+      let texto = document.createElement("DIV");
       texto.classList.add("p-registro");
-      texto.innerText = `- ${e.nombre} ${e.apellido} ${e.segundoApellido}`;
+      let botones = document.createElement("DIV");
+      botones.classList.add('estilo-botones');
+      texto.innerHTML = `
+        <p><span class="resaltado" >Fecha:</span> ${element.fechaCita}</p>
+        <p><span class="resaltado">Nombre:</span> ${element.nombre}</p>
+        <p><span class="resaltado" >Apellido:</span> ${element.apellido}</p>
+        <p><span class="resaltado">Segundo Apellido:</span> ${element.segundoApellido}</span>
+        <p><span class="resaltado">Dni:</span> ${element.dni}</span>
+        <p><span class="resaltado" >Fecha nacimiento:</span> ${element.nacimiento}</span>
+        <p><span class="resaltado" >Mensaje:</span> ${element.mensaje}</span>`;
 
       // crear botones del registro
       let b_borrar = document.createElement("button");
@@ -73,10 +118,11 @@ class Iu {
       // crear div container registros y botones
       let containerRegistro = document.createElement("DIV");
       containerRegistro.classList.add("estilo-registro");
-      containerRegistro.setAttribute("data-id", e.id);
+      containerRegistro.setAttribute("data-id", element.id);
       containerRegistro.appendChild(texto);
-      containerRegistro.appendChild(b_borrar);
-      containerRegistro.appendChild(b_editar);
+      botones.appendChild(b_borrar);
+      botones.appendChild(b_editar);
+      containerRegistro.appendChild(botones);
 
       // insertar en el html
       containerTexto.appendChild(containerRegistro);
@@ -120,24 +166,24 @@ class Iu {
     });
   }
 
-  editarRegistros() {
-    const container = document.querySelector("#registros");
-    container.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (e.target.classList.contains("boton-editar")) {
-        let registro = e.target.closest(".estilo-registro");
-        let indice = Number(registro.getAttribute("data-id"));
-    
-        // Buscar en `listaStorage`
-        const cliente = this.lista.find((c) => c.id === indice);
-        if (cliente) {
-          // Antes de editar, rellenar el formulario
-          i_nombre.value = cliente.nombre;
-          i_apellido.value = cliente.apellido;
-          i_subApellido.value = cliente.segundoApellido;
-        }
-      }
-      localStorage.setItem("lista", JSON.stringify(this.lista)); // Actualizar localStorage
-    });
-  }
+  // editarRegistros() {
+  //   const container = document.querySelector("#registros");
+  //   container.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     if (e.target.classList.contains("boton-editar")) {
+  //       let registro = e.target.closest(".estilo-registro");
+  //       let indice = Number(registro.getAttribute("data-id"));
+
+  //       // Buscar en `listaStorage`
+  //       const cliente = this.lista.find((c) => c.id === indice);
+  //       if (cliente) {
+  //         // Antes de editar, rellenar el formulario
+  //         i_nombre.value = cliente.nombre;
+  //         i_apellido.value = cliente.apellido;
+  //         i_subApellido.value = cliente.segundoApellido;
+  //       }
+  //     }
+  //     localStorage.setItem("lista", JSON.stringify(this.lista)); // Actualizar localStorage
+  //   });
+  // }
 }

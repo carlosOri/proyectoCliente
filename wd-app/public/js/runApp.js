@@ -7,7 +7,7 @@ const runApp = () => {
 
   // Crear el HTML de los registros
   iu.crearHtml();
-  iu.editarRegistros();  //maneja la edición de registros
+  // iu.editarRegistros();  //maneja la edición de registros
   // Evento que inserta los registros
   botonCrear();
 

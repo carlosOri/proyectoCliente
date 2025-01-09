@@ -22,13 +22,14 @@
                 <h2 class="titulo-secundario">Formulario:</h2>
                 <!-- formulario -->
                 <form action="" method="" class="containerformulario" autocomplete="off">
+                 
                     <div class="container-input ">
                         <label for="nombre">Nombre:</label>
                         <input class="caja-input" type="text" name="nombre" id="nombre" value=""
                             placeholder="Escribe tu nombre">
                         <div class="in-nombre" style="height: 10px;"></div>
-
                     </div>
+
                     <div class="container-input ">
                         <label for="apellido">Apellido:</label>
                         <input class="caja-input" type="text" name="apellido" id="apellido" value=""
@@ -43,6 +44,26 @@
                         <div class="in-subApellido" style="height: 10px;"></div>
                     </div>
 
+                    <div class="container-input ">
+                        <label for="dni">Dni:</label>
+                        <input class="caja-input" type="text" name="dni" id="dni" value=""
+                            placeholder="Ejemplo: 12345678A">
+                        <div class="in-Dni" style="height: 10px;"></div>
+                    </div>
+
+                    <div class="container-input ">
+                        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                        <input class="caja-input date" type="date" name="fechaNacimiento" id="fechaNacimiento" value="">
+                        <div class="in-subApellido" style="height: 10px;"></div>
+                    </div>
+
+                    <div class="container-input">
+                        <label for="observaciones" style="line-height: 2;">Observaciones:</label>
+                        <br>
+                        <textarea class="caja-input" name="observaciones" id="observaciones" placeholder="Escribe tú comentario"></textarea>
+                        
+                    </div>
+
                     <div id="mensage"></div>
 
                     <div class="container-botones">
@@ -53,10 +74,10 @@
             </div>
             <!-- seccion registros -->
             <div class="container-registros">
-                <h2 class="titulo-secundario">Registros:</h2>
-                <p class="sub-titulo">Clientes:</p>
+                <h2 class="titulo-secundario">Registro:</h2>
+                <p class="sub-titulo">Citas:</p>
                 <div id="registros">
-                    <p id="no-registros">No hay registros ...</p>
+                    <p id="no-registros">No hay citas ...</p>
                 </div>
             </div>
         </section>

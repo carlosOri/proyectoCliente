@@ -2,6 +2,9 @@
 let i_nombre = document.querySelector("#nombre");
 let i_apellido = document.querySelector("#apellido");
 let i_subApellido = document.querySelector("#subApellido");
+let i_dni = document.querySelector("#dni");
+let i_nacimiento = document.querySelector("#fechaNacimiento");
+let i_observaciones = document.querySelector("#observaciones");
 const b_crear = document.querySelector(".boton-crear");
 const b_reset = document.querySelector(".boton-reset");
 const container_registro = document.querySelector(".container-registros");
@@ -12,30 +15,46 @@ const registrosHtml = document.querySelector("#registros");
 const alerta_nombre = document.querySelector(".in-nombre");
 const alerta_apellido = document.querySelector(".in-apellido");
 const alerta_subApellido = document.querySelector(".in-subApellido");
+const alertaDni = document.querySelector(".in-Dni");
 const parrafo_inicio = document.querySelector(".visible");
+const dniPattern = /^[0-9]{8}[A-Za-z]$/;
+
 //Array para insertar clientes
 let listaStorage = [];
 //variables para la funcion incrementoID
 let n = 0;
 let nID = 0;
+//variable función editar
+let old_registro;
 
 const datosCliente = () => {
   //instancia de cliente
   const cliente = new Cliente(
     i_nombre.value.toLowerCase(),
     i_apellido.value.toLowerCase(),
-    i_subApellido.value.toLowerCase()
+    i_subApellido.value.toLowerCase(),
+    i_dni.value,
+    i_nacimiento.value,
+    i_observaciones.value
   );
 
   let nombre = cliente.getNombre();
   let apellido = cliente.getApellido();
   let segundoApellido = cliente.getSegundoApellido();
+  let dni = cliente.getDni();
+  let nacimiento = cliente.nacimiento;
+  let observaciones = cliente.mensaje;
+  let fecha = cliente.fechaCita;
 
   return {
     cliente,
     nombre,
     apellido,
     segundoApellido,
+    dni,
+    nacimiento,
+    observaciones,
+    fecha,
   };
 };
 
@@ -111,6 +130,17 @@ const validarCampos = () => {
     i_subApellido.classList.remove("bgAlerta");
     i_subApellido.classList.add("caja-input");
   }
+
+  if (!dniPattern.test(cliente.getDni())) {
+    let alerta_dni = document.createElement("p");
+    alertaHtml(alerta_dni, i_dni, alertaDni);
+  } else {
+    i_dni.value = cliente.getDni();
+    i_subApellido.classList.remove("bgAlerta");
+    i_subApellido.classList.add("caja-input");
+  }
+
+  console.log(cliente);
   return cliente;
 };
 
@@ -144,31 +174,12 @@ const borrarRegistro = (but, list, div, container) => {
   });
 };
 
-//Funcion del evento editar
-const editarRegistro = (lista, cliente) => {
-  console.log(lista);
-  //contenedor de eventos
-  let contenedor = document.querySelector("#registros");
-  contenedor.addEventListener("click", (e) => {
-    e.preventDefault();
-    let registro = e.target.closest(".estilo-registro");
-    let indice = Number(registro.getAttribute("data-id"));
-      let index = lista.findIndex((i) => i.id === cliente.id);
-      console.log(index);
-      if (index !== -1) {
-        lista.push(cliente);
-        localStorage.setItem("lista", JSON.stringify(lista));
-      //}
-    }
-  });
-};
-
 const insertarHtml = (cliente) => {
-  //recuperar listaStorage
-  let lista = JSON.parse(localStorage.getItem("lista")) || [];
   //crear texto html
-  let texto = document.createElement("P");
+  let texto = document.createElement("DIV");
   texto.classList.add("p-registro");
+  let botones = document.createElement("DIV");
+  botones.classList.add('estilo-botones');
   //crear contenedor de registro
   let divRegistros = document.createElement("DIV");
   divRegistros.classList.add("estilo-registro");
@@ -183,20 +194,26 @@ const insertarHtml = (cliente) => {
   b_borrar.textContent = "Borrar";
   b_editar.textContent = "Editar";
   //Insertar el texto con los valores de los clientes
-  lista.forEach((element) => {
-    texto.innerText = `- ${element.nombre} ${element.apellido} ${element.segundoApellido}`;
+  listaStorage.forEach((element) => {
+    texto.innerHTML = `
+    <p><span class="resaltado">Fecha:</span> ${element.fechaCita}</p>
+    <p><span class="resaltado">Nombre:</span> ${element.nombre}</p>
+    <p><span class="resaltado">Apellido:</span> ${element.apellido}</p>
+    <p><span class="resaltado">Segundo Apellido:</span> ${element.segundoApellido}</span>
+    <p><span class="resaltado">Dni:</span> ${element.dni}</span>
+    <p><span class="resaltado">Fecha nacimiento:</span> ${element.nacimiento}</span>
+    <p><span class="resaltado">Mensaje:</span> ${element.mensaje}</span>`;
   });
 
   //inserta en el contenedor html
   divRegistros.appendChild(texto);
-  divRegistros.appendChild(b_borrar);
-  divRegistros.appendChild(b_editar);
+  botones.appendChild(b_borrar);
+  botones.appendChild(b_editar);
+  divRegistros.appendChild(botones);
   contenedor.appendChild(divRegistros);
 
   // funcion que borra los registros
-  borrarRegistro(b_borrar, lista, divRegistros, contenedor);
-  editarRegistro(lista, cliente);
-  
+  borrarRegistro(b_borrar, listaStorage, divRegistros, contenedor);
 };
 
 //Funcion donde se insertan los clientes en el localStorage
@@ -224,7 +241,7 @@ const insertarArray = () => {
     );
 
     //Si no esta repetido
-    if (encontrado === -1) {
+    if (encontrado === -1 && !cliente.id) {
       //poner id al cliente
       cliente.asignarId(id);
       listaStorage.push(cliente);
@@ -246,8 +263,6 @@ const insertarArray = () => {
       formulario.reset();
     }
   }
-  console.log(cliente);
-  localStorage.setItem("lista", JSON.stringify(listaStorage));
 };
 
 //evento click abarca las funciones previas a la inserción en el dom
@@ -257,7 +272,7 @@ const botonCrear = () => {
     e.preventDefault();
     validarCampos();
     insertarArray();
-
+    localStorage.setItem("lista", JSON.stringify(listaStorage));
     //mostrar texto de no registros
     if (listaStorage.length < 1) {
       textoNoRegistros.classList.add("visible");
@@ -266,7 +281,23 @@ const botonCrear = () => {
       textoNoRegistros.classList.remove("visible");
       textoNoRegistros.classList.add("animacion-texto");
     }
-
-    localStorage.setItem("lista", JSON.stringify(listaStorage));
   });
 };
+
+//evento Editar
+registrosHtml.addEventListener("click", (event) => {
+  let registro = event.target.closest("[data-id]");
+  let dataID = Number(registro.getAttribute("data-id"));
+  if (event.target.classList.contains("boton-editar")) {
+    let editado = listaStorage.find((element) => element.id === dataID);
+    listaStorage = listaStorage.filter((element) => element.id !== editado.id);
+    i_nombre.value = editado.nombre;
+    i_apellido.value = editado.apellido;
+    i_subApellido.value = editado.segundoApellido;
+    i_dni.value = editado.dni;
+    i_nacimiento.value = editado.nacimiento;
+    i_observaciones.value = editado.mensaje;
+    registro.remove();
+    localStorage.setItem("lista", JSON.stringify(listaStorage));
+  }
+});
